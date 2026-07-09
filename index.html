@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/FkJPMZ8r/Chat-GPT-Image-Jun-18-2026-07-58-22-AM.png" />
+    <link rel="shortcut icon" href="https://i.ibb.co/FkJPMZ8r/Chat-GPT-Image-Jun-18-2026-07-58-22-AM.png" />
+
+    <title>Pro All Tools · Admin Dashboard</title>
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg: #f0f2f8;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-solid: #ffffff;
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-primary: #1a1a2e;
+            --text-secondary: #2d2d44;
+            --text-muted: #6b6b8a;
+            --shadow: 0 20px 50px -12px rgba(0, 20, 30, 0.12);
+            --radius: 28px;
+            --radius-sm: 16px;
+            --transition: 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: linear-gradient(145deg, #1a1a2e, #16213e);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-red: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-gold: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+            min-height: 100vh;
+            transition: background var(--transition);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 14px 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            flex-wrap: nowrap;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+            justify-content: space-between;
+        }
+
+        .hamburger {
+            display: block !important;
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 6px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            line-height: 1;
+            flex-shrink: 0;
+            order: 2;
+            margin-left: auto;
+        }
+
+        .hamburger:hover {
+            color: #cc0000;
+            background: rgba(204, 0, 0, 0.06);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 1;
+            min-width: 0;
+            margin-right: auto;
+        }
+
+        .logo .pro {
+            color: #cc0000;
+        }
+        .logo .toolss {
+            color: #1a2a6c;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .nav-links-mobile {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.6rem;
+            padding: 16px 20px 12px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 10px;
+            background: var(--nav-bg);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-radius: 0 0 16px 16px;
+        }
+
+        .nav-links-mobile.show {
+            display: flex;
+        }
+
+        .nav-links-mobile a {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            white-space: normal;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-links-mobile a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-links-mobile a i {
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+            color: #cc0000;
+        }
+
+        .nav-links-mobile a.active {
+            color: #cc0000;
+        }
+
+        .nav-links-mobile a:hover {
+            color: #cc0000;
+            padding-left: 8px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .app-wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* ===== GLASS CARD UTILITY ===== */
+        .glass {
+            background: var(--surface);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+        }
+
+        .glass-sm {
+            background: var(--card-bg);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition);
+        }
+
+        /* ===== LOGIN ===== */
+        .login-container {
+            max-width: 420px;
+            margin: 10vh auto;
+            padding: 48px 36px;
+        }
+
+        .login-container .brand {
+            font-size: 2.2rem;
+            text-align: center;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .login-container .brand .pro {
+            color: #cc0000;
+            font-weight: 700;
+        }
+        .login-container .brand .all {
+            color: #1a2a6c;
+            font-weight: 700;
+        }
+        .login-container .brand .toolss {
+            color: #1a2a6c;
+            font-weight: 700;
+        }
+
+        .login-container .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+
+        .login-container .field {
+            margin-bottom: 18px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 1px solid #d1d5db;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            margin-bottom: 32px;
+        }
+
+        .top-bar .brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-bar .brand .pro {
+            color: #cc0000;
+        }
+        .top-bar .brand .all {
+            color: #1a2a6c;
+        }
+        .top-bar .brand .toolss {
+            color: #1a2a6c;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            border: none;
+            background: var(--surface-solid);
+            color: var(--text-primary);
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            transition: all var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46a1 100%);
+            color: white;
+        }
+        .btn-danger {
+            background: var(--gradient-red);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #e85d6c 0%, #d94a5e 100%);
+            color: white;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+        }
+        .btn-outline:hover {
+            background: var(--surface);
+            border-color: var(--text-primary);
+        }
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: #1a1a2e;
+        }
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #f5c842 0%, #f58a4a 100%);
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            padding: 20px 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        .stat-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.05;
+            border-radius: 50%;
+            transition: all 0.5s;
+        }
+
+        .stat-card:hover::before {
+            transform: scale(1.5);
+        }
+
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--text-muted);
+            font-weight: 600;
+            position: relative;
+        }
+
+        /* ===== TOOLS ===== */
+        .tools-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            gap: 12px;
+        }
+
+        .tools-header h3 {
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tools-header h3 i {
+            color: #667eea;
+        }
+
+        .search-box {
+            background: var(--surface);
+            backdrop-filter: blur(6px);
+            border-radius: 60px;
+            padding: 4px 4px 4px 20px;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            flex: 1 1 280px;
+            max-width: 380px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        .search-box i {
+            color: var(--text-muted);
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 10px 8px;
+            width: 100%;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        .tool-card {
+            padding: 24px 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: default;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.05s; }
+        .tool-card:nth-child(2) { animation-delay: 0.1s; }
+        .tool-card:nth-child(3) { animation-delay: 0.15s; }
+        .tool-card:nth-child(4) { animation-delay: 0.2s; }
+        .tool-card:nth-child(5) { animation-delay: 0.25s; }
+        .tool-card:nth-child(6) { animation-delay: 0.3s; }
+        .tool-card:nth-child(7) { animation-delay: 0.35s; }
+        .tool-card:nth-child(8) { animation-delay: 0.4s; }
+
+        .tool-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-number {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .tool-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 4px 0 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .tool-name:hover {
+            transform: scale(1.02);
+        }
+
+        .tool-name i {
+            font-size: 1rem;
+            margin-left: 6px;
+            color: #667eea;
+            -webkit-text-fill-color: #667eea;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+
+        .tool-name:hover i {
+            opacity: 1;
+        }
+
+        .tool-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 10px 0;
+        }
+        .tool-meta i {
+            width: 18px;
+            color: var(--text-muted);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-live {
+            background: #bbf7d0;
+            color: #166534;
+        }
+        .status-development {
+            background: #fef08a;
+            color: #854d0e;
+        }
+        .status-maintenance {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+        .status-offline {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            justify-content: flex-end;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 14px;
+        }
+        .card-actions .btn {
+            padding: 4px 14px;
+            font-size: 0.75rem;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--surface-solid);
+            max-width: 520px;
+            width: 100%;
+            padding: 36px 32px;
+            border-radius: var(--radius);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            transform: scale(0.96) translateY(10px);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal h2 {
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+        }
+
+        .modal h2 i {
+            color: #667eea;
+        }
+
+        .modal .field {
+            margin-bottom: 18px;
+        }
+        .modal label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+        .modal input,
+        .modal select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #d1d5db;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.2s;
+        }
+        .modal input:focus,
+        .modal select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* ===== PASSWORD MODAL ===== */
+        .password-modal .modal {
+            max-width: 400px;
+        }
+        .password-modal .modal h2 i {
+            color: #f5576c;
+        }
+        .password-modal .modal input {
+            text-align: center;
+            letter-spacing: 4px;
+            font-size: 1.2rem;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .toast {
+            background: var(--surface-solid);
+            backdrop-filter: blur(8px);
+            padding: 16px 28px;
+            border-radius: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid #667eea;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.4s ease;
+        }
+        .toast.success {
+            border-left-color: #22c55e;
+        }
+        .toast.error {
+            border-left-color: #dc2626;
+        }
+        .toast.warning {
+            border-left-color: #f59e0b;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ===== LOADING ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(102, 126, 234, 0.1);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-container .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(102, 126, 234, 0.1);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        .loading-container .loading-text {
+            color: var(--text-muted);
+            font-weight: 500;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            background: var(--footer-bg);
+            color: #e0e0e0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-powered {
+            font-size: 1rem;
+            color: #aaaaaa;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-powered a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .footer-powered a:hover {
+            color: #ff4444;
+            text-decoration: underline;
+        }
+
+        .footer-powered i {
+            color: #ff6b6b;
+            margin: 0 6px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 68px;
+            }
+            nav {
+                padding: 10px 0;
+            }
+            .nav-container {
+                padding: 0 14px;
+            }
+            .nav-left {
+                gap: 8px;
+            }
+            .hamburger {
+                font-size: 1.5rem;
+                padding: 4px 6px;
+            }
+            .logo {
+                font-size: 1.2rem;
+                gap: 6px;
+            }
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .nav-links-mobile {
+                padding: 12px 16px 10px;
+                gap: 0.4rem;
+            }
+            .top-bar {
+                flex-direction: column;
+                align-items: start;
+                gap: 12px;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 16px;
+            }
+            footer {
+                padding: 20px 0;
+            }
+            .footer-powered {
+                font-size: 0.9rem;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 12px;
+            }
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            .login-container .brand {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 62px;
+            }
+            nav {
+                padding: 8px 0;
+            }
+            .nav-container {
+                padding: 0 12px;
+            }
+            .logo {
+                font-size: 1rem;
+                gap: 4px;
+            }
+            .logo-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .top-bar .brand {
+                font-size: 1.2rem;
+            }
+            .top-actions .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-powered {
+                font-size: 0.8rem;
+            }
+            .login-container {
+                padding: 32px 20px;
+                margin: 5vh auto;
+            }
+            .login-container .brand {
+                font-size: 1.5rem;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-left {
+                flex: 1;
+                justify-content: space-between;
+            }
+            .hamburger {
+                display: block !important;
+                font-size: 1.8rem;
+                padding: 8px 12px;
+            }
+            .nav-links-mobile {
+                max-width: 300px;
+                right: 0;
+                left: auto;
+                border-radius: 0 0 16px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="https://i.ibb.co/FkJPMZ8r/Chat-GPT-Image-Jun-18-2026-07-58-22-AM.png" alt="Pro All Tools Logo" class="logo-icon" />
+                    <span class="pro">Pro</span><span class="toolss">All Tools</span>
+                </a>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="nav-links-mobile" id="navLinksMobile">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN APP ===== -->
+    <div class="app-wrapper">
+        <!-- LOGIN VIEW -->
+        <div id="loginView" class="login-container glass">
+            <span class="brand">
+                <i class="fas fa-cubes" style="color: #667eea;"></i>
+                <span class="pro">Pro</span>
+                <span class="all">All</span>
+                <span class="toolss">Tools</span>
+            </span>
+            <p class="subtitle"><i class="fas fa-shield-alt" style="color: #667eea;"></i> Admin Dashboard</p>
+            <div class="field">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="loginEmail" placeholder="admin@protools.com" />
+            </div>
+            <div class="field">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" />
+            </div>
+            <button id="loginBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:14px;">
+                <i class="fas fa-sign-in-alt"></i> Sign in
+            </button>
+            <div id="loginError" style="color:#dc2626; margin-top:12px; font-size:0.9rem;"></div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboardView" class="hidden">
+            <!-- Top Bar -->
+            <div class="top-bar glass">
+                <span class="brand">
+                    <i class="fas fa-cubes" style="color: #667eea;"></i>
+                    <span class="pro">Pro</span>
+                    <span class="all">All</span>
+                    <span class="toolss">Tools</span>
+                </span>
+                <div class="top-actions">
+                    <button id="addToolBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Add Tool</button>
+                    <button id="logoutBtn" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card glass-sm">
+                    <div class="stat-number" id="statTotal">0</div>
+                    <div class="stat-label"><i class="fas fa-database"></i> Total</div>
+                </div>
+                <div class="stat-card glass-sm">
+                    <div class="stat-number" id="statLive">0</div>
+                    <div class="stat-label"><i class="fas fa-check-circle" style="color:#22c55e;"></i> Live</div>
+                </div>
+                <div class="stat-card glass-sm">
+                    <div class="stat-number" id="statDev">0</div>
+                    <div class="stat-label"><i class="fas fa-code" style="color:#eab308;"></i> Development</div>
+                </div>
+                <div class="stat-card glass-sm">
+                    <div class="stat-number" id="statMaint">0</div>
+                    <div class="stat-label"><i class="fas fa-tools" style="color:#f59e0b;"></i> Maintenance</div>
+                </div>
+                <div class="stat-card glass-sm">
+                    <div class="stat-number" id="statOffline">0</div>
+                    <div class="stat-label"><i class="fas fa-power-off" style="color:#94a3b8;"></i> Offline</div>
+                </div>
+            </div>
+
+            <!-- Tools Header -->
+            <div class="tools-header">
+                <h3><i class="fas fa-tools"></i> All Tools</h3>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by name, domain..." />
+                </div>
+            </div>
+
+            <!-- Tools Grid -->
+            <div id="toolsGrid" class="tools-grid"></div>
+            <div id="loadingIndicator" class="loading-container">
+                <div class="spinner"></div>
+                <div class="loading-text"><i class="fas fa-sync-alt fa-spin"></i> Loading tools...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle"><i class="fas fa-plus"></i> Add Tool</h2>
+            <div class="field">
+                <label><i class="fas fa-hashtag"></i> Tool Number</label>
+                <input id="fNumber" type="number" placeholder="e.g. 1" />
+            </div>
+            <div class="field">
+                <label><i class="fas fa-tag"></i> Tool Name</label>
+                <input id="fName" placeholder="QR Generator" />
+            </div>
+            <div class="field">
+                <label><i class="fas fa-globe"></i> Domain</label>
+                <input id="fDomain" placeholder="protoolss.online" />
+            </div>
+            <div class="field">
+                <label><i class="fas fa-server"></i> Hosting</label>
+                <input id="fHosting" placeholder="GitHub Pages" />
+            </div>
+            <div class="field">
+                <label><i class="fas fa-circle"></i> Status</label>
+                <select id="fStatus">
+                    <option value="Live">Live</option>
+                    <option value="Development">Development</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Offline">Offline</option>
+                </select>
+            </div>
+            <input type="hidden" id="editId" value="" />
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="modalCancel"><i class="fas fa-times"></i> Cancel</button>
+                <button class="btn btn-primary" id="modalSave"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSWORD MODAL FOR DELETE ===== -->
+    <div class="modal-overlay password-modal" id="passwordModal">
+        <div class="modal">
+            <h2><i class="fas fa-shield-alt"></i> Delete Confirmation</h2>
+            <p style="color:var(--text-secondary); margin-bottom:16px;">Enter password to delete this tool</p>
+            <div class="field">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="deletePassword" placeholder="Enter password..." />
+                <div id="passwordError" style="color:#dc2626; font-size:0.85rem; margin-top:8px;"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="passwordCancel"><i class="fas fa-times"></i> Cancel</button>
+                <button class="btn btn-danger" id="passwordConfirm"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-powered">
+                <i class="fas fa-bolt"></i> Powered by
+                <a href="https://www.protoolss.online" target="_blank" rel="noopener noreferrer">www.protoolss.online</a>
+                <i class="fas fa-rocket" style="color: #ff6b6b;"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== FIREBASE SDKs ===== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ===== FIREBASE CONFIG =====
+        import { initializeApp } from 'firebase/app';
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+        import { getDatabase, ref, push, set, update, remove, onValue } from 'firebase/database';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBHkdixVECrCjJ_d7cWhF79TEiE_HR4z6c",
+            authDomain: "alltools-12f78.firebaseapp.com",
+            databaseURL: "https://alltools-12f78-default-rtdb.firebaseio.com",
+            projectId: "alltools-12f78",
+            storageBucket: "alltools-12f78.firebasestorage.app",
+            messagingSenderId: "11875988890",
+            appId: "1:11875988890:web:0fb86642d6b23594c77623",
+            measurementId: "G-3DLVSB1RHT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // ===== DELETE PASSWORD =====
+        const DELETE_PASSWORD = "704685@Mps.pro";
+
+        // ===== DOM REFS =====
+        const loginView = document.getElementById('loginView');
+        const dashboardView = document.getElementById('dashboardView');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const addToolBtn = document.getElementById('addToolBtn');
+        const toolsGrid = document.getElementById('toolsGrid');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const searchInput = document.getElementById('searchInput');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const fNumber = document.getElementById('fNumber');
+        const fName = document.getElementById('fName');
+        const fDomain = document.getElementById('fDomain');
+        const fHosting = document.getElementById('fHosting');
+        const fStatus = document.getElementById('fStatus');
+        const editId = document.getElementById('editId');
+        const modalSave = document.getElementById('modalSave');
+        const modalCancel = document.getElementById('modalCancel');
+        const toastContainer = document.getElementById('toastContainer');
+
+        const passwordModal = document.getElementById('passwordModal');
+        const deletePassword = document.getElementById('deletePassword');
+        const passwordError = document.getElementById('passwordError');
+        const passwordConfirm = document.getElementById('passwordConfirm');
+        const passwordCancel = document.getElementById('passwordCancel');
+
+        const statTotal = document.getElementById('statTotal');
+        const statLive = document.getElementById('statLive');
+        const statDev = document.getElementById('statDev');
+        const statMaint = document.getElementById('statMaint');
+        const statOffline = document.getElementById('statOffline');
+
+        let allTools = [];
+        let listenerOff = null;
+        let pendingDeleteId = null;
+
+        // ===== HELPERS =====
+        function toast(msg, type = 'success') {
+            const div = document.createElement('div');
+            div.className = `toast ${type}`;
+            const iconMap = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+            const icon = iconMap[type] || 'fa-info-circle';
+            div.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+            toastContainer.appendChild(div);
+            setTimeout(() => div.remove(), 2800);
+        }
+
+        function showModal(title, data = null) {
+            modalTitle.innerHTML = `<i class="fas ${data ? 'fa-pen' : 'fa-plus'}"></i> ${title}`;
+            if (data) {
+                fNumber.value = data.number || '';
+                fName.value = data.name || '';
+                fDomain.value = data.domain || '';
+                fHosting.value = data.hosting || '';
+                fStatus.value = data.status || 'Live';
+                editId.value = data.id || '';
+            } else {
+                fNumber.value = '';
+                fName.value = '';
+                fDomain.value = '';
+                fHosting.value = '';
+                fStatus.value = 'Live';
+                editId.value = '';
+            }
+            modalOverlay.classList.add('active');
+        }
+
+        function hideModal() { modalOverlay.classList.remove('active'); }
+
+        function showPasswordModal(id) {
+            pendingDeleteId = id;
+            deletePassword.value = '';
+            passwordError.textContent = '';
+            passwordModal.classList.add('active');
+            setTimeout(() => deletePassword.focus(), 100);
+        }
+
+        function hidePasswordModal() {
+            passwordModal.classList.remove('active');
+            pendingDeleteId = null;
+            deletePassword.value = '';
+            passwordError.textContent = '';
+        }
+
+        // ===== RENDER TOOLS =====
+        function renderTools(filter = '') {
+            const q = filter.toLowerCase().trim();
+            let filtered = allTools;
+            if (q) filtered = allTools.filter(t =>
+                t.name.toLowerCase().includes(q) ||
+                t.domain.toLowerCase().includes(q) ||
+                String(t.number).includes(q)
+            );
+            if (!filtered.length) {
+                toolsGrid.innerHTML =
+                    `<div class="glass-sm" style="padding:60px 20px; text-align:center; grid-column:1/-1; color:var(--text-muted);">
+                        <i class="fas fa-search" style="font-size:2.5rem; display:block; margin-bottom:16px; color:#667eea;"></i>
+                        <p style="font-size:1.1rem; font-weight:500;">No tools found</p>
+                        <p style="font-size:0.9rem; margin-top:4px;">Try adjusting your search</p>
+                    </div>`;
+                return;
+            }
+
+            toolsGrid.innerHTML = filtered.map(t => {
+                // Escape domain for safe onclick attribute
+                const safeDomain = t.domain.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                return `
+                    <div class="tool-card glass-sm">
+                        <div class="tool-number"><i class="fas fa-hashtag"></i> ${t.number}</div>
+                        <div class="tool-name" onclick="window.openDomain('${safeDomain}')">
+                            ${t.name} <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="tool-meta">
+                            <span><i class="fas fa-globe"></i> ${t.domain}</span>
+                            <span><i class="fas fa-server"></i> ${t.hosting}</span>
+                        </div>
+                        <div style="margin:8px 0;">
+                            <span class="status-badge status-${t.status.toLowerCase()}"><i class="fas fa-circle" style="font-size:0.5rem; margin-right:4px;"></i> ${t.status}</span>
+                        </div>
+                        <div style="font-size:0.7rem; color:var(--text-muted);">
+                            <i class="far fa-clock"></i> Updated: ${new Date(t.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-outline editBtn" data-id="${t.id}"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger deleteBtn" data-id="${t.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.editBtn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    const tool = allTools.find(t => t.id === id);
+                    if (tool) showModal('Edit Tool', tool);
+                });
+            });
+            document.querySelectorAll('.deleteBtn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    showPasswordModal(id);
+                });
+            });
+        }
+
+        // Global function for opening domains
+        window.openDomain = function(domain) {
+            if (domain) {
+                try {
+                    let url = domain.trim();
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                        url = 'https://' + url;
+                    }
+                    window.open(url, '_blank');
+                } catch (e) {
+                    toast('Invalid domain: ' + domain, 'error');
+                }
+            }
+        };
+
+        function updateStats() {
+            const total = allTools.length;
+            const live = allTools.filter(t => t.status === 'Live').length;
+            const dev = allTools.filter(t => t.status === 'Development').length;
+            const maint = allTools.filter(t => t.status === 'Maintenance').length;
+            const offline = allTools.filter(t => t.status === 'Offline').length;
+            statTotal.textContent = total;
+            statLive.textContent = live;
+            statDev.textContent = dev;
+            statMaint.textContent = maint;
+            statOffline.textContent = offline;
+        }
+
+        function listenTools() {
+            if (listenerOff) listenerOff();
+            const toolsRef = ref(db, 'tools');
+            listenerOff = onValue(toolsRef, (snapshot) => {
+                loadingIndicator.classList.add('hidden');
+                const data = snapshot.val();
+                if (!data) { allTools = [];
+                    renderTools('');
+                    updateStats(); return; }
+                allTools = Object.entries(data).map(([id, val]) => ({ id, ...val }));
+                renderTools(searchInput.value);
+                updateStats();
+            }, (err) => {
+                toast('DB error: ' + err.message, 'error');
+            });
+        }
+
+        // ===== AUTH STATE =====
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                listenTools();
+            } else {
+                loginView.classList.remove('hidden');
+                dashboardView.classList.add('hidden');
+                if (listenerOff) { listenerOff();
+                    listenerOff = null; }
+            }
+        });
+
+        // ===== LOGIN =====
+        loginBtn.addEventListener('click', () => {
+            const email = loginEmail.value.trim();
+            const pass = loginPassword.value.trim();
+            if (!email || !pass) { loginError.textContent = 'Enter email and password'; return; }
+            loginError.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading-spinner"></span> signing...';
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => { toast('Welcome back!'); })
+                .catch((err) => { loginError.textContent = err.message; })
+                .finally(() => { loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign in'; });
+        });
+
+        loginPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
+        loginEmail.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
+
+        // ===== LOGOUT =====
+        logoutBtn.addEventListener('click', () => { signOut(auth);
+            toast('Signed out'); });
+
+        // ===== ADD TOOL =====
+        addToolBtn.addEventListener('click', () => showModal('Add Tool'));
+
+        // ===== SAVE TOOL =====
+        modalSave.addEventListener('click', () => {
+            const id = editId.value;
+            const number = parseInt(fNumber.value);
+            const name = fName.value.trim();
+            const domain = fDomain.value.trim();
+            const hosting = fHosting.value.trim();
+            const status = fStatus.value;
+            if (!number || !name || !domain || !hosting) { toast('All fields required', 'error'); return; }
+            const now = Date.now();
+            const payload = { number, name, domain, hosting, status, updatedAt: now };
+            if (!id) {
+                payload.createdAt = now;
+                push(ref(db, 'tools'), payload).then(() => { toast('Tool created');
+                    hideModal(); });
+            } else {
+                update(ref(db, `tools/${id}`), payload).then(() => { toast('Tool updated');
+                    hideModal(); });
+            }
+        });
+
+        modalCancel.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
+
+        // ===== PASSWORD MODAL HANDLERS =====
+        passwordConfirm.addEventListener('click', () => {
+            const password = deletePassword.value.trim();
+            if (!password) {
+                passwordError.textContent = 'Please enter the password';
+                return;
+            }
+            if (password === DELETE_PASSWORD) {
+                if (pendingDeleteId) {
+                    remove(ref(db, `tools/${pendingDeleteId}`))
+                        .then(() => {
+                            toast('Tool deleted successfully', 'success');
+                            hidePasswordModal();
+                        })
+                        .catch((err) => {
+                            toast('Error deleting tool: ' + err.message, 'error');
+                            hidePasswordModal();
+                        });
+                }
+            } else {
+                passwordError.textContent = 'Incorrect password. Please try again.';
+                deletePassword.value = '';
+                deletePassword.focus();
+                toast('Incorrect password', 'error');
+            }
+        });
+
+        passwordCancel.addEventListener('click', hidePasswordModal);
+        passwordModal.addEventListener('click', (e) => {
+            if (e.target === passwordModal) hidePasswordModal();
+        });
+
+        deletePassword.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') passwordConfirm.click();
+            if (e.key === 'Escape') hidePasswordModal();
+        });
+
+        // ===== SEARCH =====
+        searchInput.addEventListener('input', (e) => renderTools(e.target.value));
+
+        // ===== NAVBAR SCRIPTS =====
+        (function() {
+            const nav = document.getElementById('mainNav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navLinksMobile = document.getElementById('navLinksMobile');
+
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navLinksMobile.classList.toggle('show');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            document.querySelectorAll('#navLinksMobile a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinksMobile.classList.remove('show');
+                    const icon = hamburger.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('nav') && navLinksMobile.classList.contains('show')) {
+                    navLinksMobile.classList.remove('show');
+                    const icon = hamburger.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
